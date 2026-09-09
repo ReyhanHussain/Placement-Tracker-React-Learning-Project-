@@ -103,17 +103,47 @@ function App() {
     ref: "",
   });
 
+  // id: null,
+  // company: "",
+  // role: "",
+  // status: "Applied",
+  // date: "",
+  // ref: "",
 
-      // id: null,
-      // company: "",
-      // role: "",
-      // status: "Applied",
-      // date: "",
-      // ref: "",
-  function errorHandler(form){
-        console.log('form data: ', form)
+  //       [
+  //     "id",
+  //     "company",
+  //     "role",
+  //     "status",
+  //     "date",
+  //     "ref"
+  // ]
+
+  function errorHandler(form) {
+
+    const errorTemp = {
+      length: 0
+    }
+
+    console.log("form data: ", form);
+    console.log(Object.keys(form));
+
+
+
+    Object.keys(errorValues).forEach((key)=>{
+        if(form[key].trim() == ''){
+          errorTemp['length'] = errorTemp['length']+1;
+          errorTemp[key] = errorValues[key];
+        }
+    })
+    setError(errorTemp)
+    console.log('temp error we designed is: ', errorTemp);
+    if(errorTemp.length > 0){
+      return true;
+    }
+    return false;
+
   }
-
 
   return (
     <div className="mainPage">
@@ -123,7 +153,7 @@ function App() {
         setAllInfos={allFormsInput}
         clearAllFormInputs={clearAllFormInputs}
         form={form}
-        errorHandler = {errorHandler}
+        errorHandler={errorHandler}
         setList={setList}
       />
       <Table AllInfos={list} />

@@ -1,7 +1,18 @@
 import React from 'react'
 
-function Form({ setAllInfos, error,errorHandler, form, clearAllFormInputs, setList }) {
-    console.log(error)
+function Form({ setAllInfos, error, errorHandler, form, clearAllFormInputs, setList }) {
+    console.log(error);
+    function checkForErr() {
+        const isError = errorHandler(form);
+        if (isError) {
+            return;
+        }
+        setList((prev) => {
+            clearAllFormInputs();
+            return [...prev, { ...form }]
+        })
+
+    }
     return (
         <div className='form-container'>
 
@@ -30,11 +41,7 @@ function Form({ setAllInfos, error,errorHandler, form, clearAllFormInputs, setLi
                 <input onChange={setAllInfos} value={form.ref} type="text" name='ref' placeholder='Any Reference (url...)' />
                 <span className='errorField'>{error.ref}</span>
             </div>
-            <button onClick={() => setList((prev) => {
-                errorHandler(form);
-                clearAllFormInputs();
-                return [...prev, { ...form }]
-            })}>Add</button>
+            <button onClick={checkForErr}>Add</button>
         </div>
     )
 }
